@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
+    // Information when moving on the grid
     private Vector2Int moveDir;
     private Vector2Int gridPos;
 
+    // Timer for the move action
     [Header("Movement Speed")]
     public float gridMoveTimerMax = 1f;
     private float gridMoveTimer;
+
+    // Snake Body
+    private int snakeBodySize;
+    private List<Vector2Int> snakePosHistoryList;
 
     private LevelGrid levelGrid;
 
@@ -21,15 +27,17 @@ public class Snake : MonoBehaviour
     // Initializing variables
     private void Awake()
     {
-        moveDir = new Vector2Int(1, 0);
         gridPos = new Vector2Int(10, 10);
         gridMoveTimer = gridMoveTimerMax;
+        moveDir = new Vector2Int(1, 0);
+
+        snakeBodySize = 1;
     }
 
     private void Update()
     {
         MoveInput();
-        MoveTimer();
+        MoveHandler();
     }
 
     // Movement, we use coordinates to move
@@ -71,13 +79,31 @@ public class Snake : MonoBehaviour
 
     // How much time must pass before the next movement action is
     // executed. Also tells the LevelGrid where the snake is.
-    private void MoveTimer()
+    private void MoveHandler()
     {
         gridMoveTimer += Time.deltaTime;
         if (gridMoveTimer >= gridMoveTimerMax)
         {
+            gridMoveTimer -= gridMoveTimerMax;
+
+            snakePosHistoryList.Insert(0, gridPos);
+
             gridPos += moveDir;
-            gridMoveTimer = 0;
+
+            if (snakePosHistoryList.Count >= snakeBodySize + 1)
+            {
+                snakePosHistoryList.RemoveAt(snakePosHistoryList.Count - 1);
+            }
+
+            for (int i = 0; i < snakePosHistoryList.Count; i++)
+            {
+                Vector2Int snakeMovePos = snakePosHistoryList[i];
+                GameObject snakeBodyGameObject = new GameObject();
+                SpriteRenderer snakeSpriteRenderer = snakeBodyGameObject.AddComponent<SpriteRenderer>();
+                snakeSpriteRenderer.sprite = GameAssets.instance.snakeBodySprite;
+                snakeBodyGameObject.transform.position = new Vector3(snakeMovePos.x, snakeMovePos.y);
+                Object.Destroy(snakeBodyGameObject, gridMoveTimerMax);
+            }
 
             transform.position = new Vector3(gridPos.x, gridPos.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngle(moveDir) - 90);
