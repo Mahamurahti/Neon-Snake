@@ -13,20 +13,11 @@ public class GameHandler : MonoBehaviour
     {
         Debug.Log("Game Handler has started");
 
-        /*
-        GameObject snakeHeadGameObject = new GameObject();
-        SpriteRenderer snakeSpriteRenderer = snakeHeadGameObject.AddComponent<SpriteRenderer>();
-        snakeSpriteRenderer.sprite = GameAssets.instance.snakeHeadSprite;
-        */
+        // Creates a grid where food can be generated
+        levelGrid = new LevelGrid(21, 21);
 
-        levelGrid = new LevelGrid(19, 19);
-
+        // Creates the setups so that levelGrid and snake can reference each other
         snake.Setup(levelGrid);
         levelGrid.Setup(snake);
-    }
-
-    void Update()
-    {
-
     }
 }
