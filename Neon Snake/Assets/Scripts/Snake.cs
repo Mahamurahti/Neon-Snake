@@ -171,6 +171,7 @@ public class Snake : MonoBehaviour
                 {
                     Debug.Log("GAME OVER!!!");
                     state = State.Dead;
+                    GameHandler.SnakeDied();
                 }
             }
 

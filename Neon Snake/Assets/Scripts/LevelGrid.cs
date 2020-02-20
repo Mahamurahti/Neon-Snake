@@ -21,6 +21,16 @@ public class LevelGrid
     public void Setup(Snake snake)
     {
         this.snake = snake;
+
+        /*
+        // Test purposes
+        for (int i = 0; i < 100000; i++)
+        {
+            foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
+            foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
+        }
+        */
+
         SpawnFood();
     }
 
@@ -48,6 +58,7 @@ public class LevelGrid
         {
             Object.Destroy(foodGameObject);
             SpawnFood();
+            GameHandler.AddScore();
             Debug.Log("Food has been eaten");
             return true;
         }
