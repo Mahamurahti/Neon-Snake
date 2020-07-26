@@ -116,6 +116,8 @@ public class Snake : MonoBehaviour
         {
             gridMoveTimer -= gridMoveTimerMax;
 
+            SoundManager.PlaySound(SoundManager.Sound.SnakeMove);
+
             // Insert the first Index of snakePosHistory to the previous position
             SnakeMovePos previousSnakeMovePos = null;
             if(snakePosHistoryList.Count > 0)
@@ -151,6 +153,7 @@ public class Snake : MonoBehaviour
             {
                 snakeBodySize++;
                 CreateSnakeBody();
+                SoundManager.PlaySound(SoundManager.Sound.SnakeEat);
             }
 
             // Removing the last snake body part from the list (not to bloat the list)
@@ -172,6 +175,7 @@ public class Snake : MonoBehaviour
                     Debug.Log("GAME OVER!!!");
                     state = State.Dead;
                     GameHandler.SnakeDied();
+                    SoundManager.PlaySound(SoundManager.Sound.GameOver);
                 }
             }
 

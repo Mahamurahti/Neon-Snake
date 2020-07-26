@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
     private static GameHandler instance;
-    private static int score;
     private static bool isDead;
+
+    //private Text gameOverText;
 
     [SerializeField] private Snake snake;
 
@@ -16,7 +18,8 @@ public class GameHandler : MonoBehaviour
     {
         isDead = false;
         instance = this;
-        InitializeStatic();
+        Score.InitializeStatic();
+        Time.timeScale = 1f;
     }
 
     void Start()
@@ -30,27 +33,30 @@ public class GameHandler : MonoBehaviour
         snake.Setup(levelGrid);
         levelGrid.Setup(snake);
 
+        Time.timeScale = 1f;
+
+        //gameOverText = transform.Find("GameOverText").GetComponent<Text>();
+
     }
 
-    // Static values will stay the same even if the scene is loaded again,
-    // to reset the score we need to call this method in the Awake method
-    private static void InitializeStatic()
+    private void Update()
     {
-        score = 0;
-    }
-
-    public static int GetScore()
-    {
-        return score;
-    }
-
-    public static void AddScore()
-    {
-        score += 100;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (IsGamePaused())
+            {
+                GameHandler.ResumeGame();
+            }
+            else
+            {
+                GameHandler.PauseGame();
+            }
+        }
     }
 
     public static void SnakeDied()
     {
+        Score.TrySetNewHighscore();
         isDead = true;
         GameOverWindow.ShowStatic();
     }
@@ -65,5 +71,28 @@ public class GameHandler : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public static bool IsGamePaused()
+    {
+        return Time.timeScale == 0f;
+    }
+ 
+    public static void PauseGame()
+    {
+        PauseWindow.ShowStatic();
+        Time.timeScale = 0f;
+    }
+
+    public static void ResumeGame()
+    {
+        PauseWindow.HideStatic();
+        Time.timeScale = 1f;
+    }
+
+    public void ResumeGameBtn()
+    {
+        PauseWindow.HideStatic();
+        Time.timeScale = 1f;
     }
 }

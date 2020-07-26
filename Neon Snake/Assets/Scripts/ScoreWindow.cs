@@ -5,13 +5,23 @@ using UnityEngine.UI;
 
 public class ScoreWindow : MonoBehaviour
 {
+    private static ScoreWindow instance;
 
     // Displaying the score
     private Text scoreText;
 
     private void Awake()
     {
+        instance = this;
         scoreText = transform.Find("scoreText").GetComponent<Text>();
+
+        Score.OnHighscoreChange += Score_OnHighscoreChanged;
+        UpdateHighscore();
+    }
+
+    private void Score_OnHighscoreChanged(object sender, System.EventArgs e)
+    {
+        UpdateHighscore();
     }
 
     private void Update()
@@ -22,7 +32,18 @@ public class ScoreWindow : MonoBehaviour
         }
         else
         {
-            scoreText.text = GameHandler.GetScore().ToString();
+            scoreText.text = Score.GetScore().ToString();
         }
+    }
+
+    private void UpdateHighscore()
+    {
+        int highscore = Score.GetHighscore();
+        transform.Find("highscoreText").GetComponent<Text>().text = "Highscore:\n" + highscore.ToString();
+    }
+
+    public static void HideStatic()
+    {
+        instance.gameObject.SetActive(false);
     }
 }
