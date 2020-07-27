@@ -38,6 +38,8 @@ public class Snake : MonoBehaviour
 
     private LevelGrid levelGrid;
 
+    public ParticleSystem eatEffect;
+
     // SetUp for referencing
     public void Setup(LevelGrid levelGrid)
     {
@@ -154,6 +156,7 @@ public class Snake : MonoBehaviour
                 snakeBodySize++;
                 CreateSnakeBody();
                 SoundManager.PlaySound(SoundManager.Sound.SnakeEat);
+                Instantiate(eatEffect, transform.position, Quaternion.identity);
             }
 
             // Removing the last snake body part from the list (not to bloat the list)

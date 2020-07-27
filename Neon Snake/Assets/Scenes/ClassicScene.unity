@@ -2366,6 +2366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridMoveTimerMax: 0.1
+  eatEffect: {fileID: 8755995140843350614, guid: bf1b8310a166ae44da4b9e16fb43fa21,
+    type: 3}
 --- !u!1 &1861239536
 GameObject:
   m_ObjectHideFlags: 0
