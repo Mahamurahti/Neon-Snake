@@ -38,6 +38,7 @@ public class Snake : MonoBehaviour
 
     private LevelGrid levelGrid;
 
+    [Header("Effects")]
     public ParticleSystem eatEffect;
 
     // SetUp for referencing
