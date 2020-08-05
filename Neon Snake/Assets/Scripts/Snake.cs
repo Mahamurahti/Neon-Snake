@@ -18,7 +18,7 @@ public class Snake : MonoBehaviour
     private enum State
     {
         Alive,
-        Dead
+        Dead,
     }
     private State state;
 
@@ -71,7 +71,6 @@ public class Snake : MonoBehaviour
                 break;
             case State.Dead:
                 break;
-                
         }
     }
 

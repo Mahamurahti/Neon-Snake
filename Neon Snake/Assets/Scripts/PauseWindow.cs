@@ -43,6 +43,6 @@ public class PauseWindow : MonoBehaviour{
     public void BackToMainMenu()
     {
         SoundManager.PlaySound(SoundManager.Sound.Click);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        Loader.Load(Loader.Scene.MainMenu);
     }
 }

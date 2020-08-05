@@ -22,15 +22,6 @@ public class LevelGrid
     {
         this.snake = snake;
 
-        /*
-        // Test purposes
-        for (int i = 0; i < 100000; i++)
-        {
-            foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
-            foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-        }
-        */
-
         SpawnFood();
     }
 

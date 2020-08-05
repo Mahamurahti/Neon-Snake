@@ -10,6 +10,7 @@ public static class Loader
     {
         ClassicScene,
         LoadingScene,
+        MainMenu,
 
     }
 
